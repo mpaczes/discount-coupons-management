@@ -2,9 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
 <mapper namespace="pl.paczesny.mappers.CouponMapper">
 
-    <select id="findByCode" resultType="pl.paczesny.model.Coupon">
+    <select id="findByCode" resultType="Coupon">
         SELECT * FROM coupons 
         WHERE UPPER(code) = UPPER(#{code})
+    </select>
+    
+     <select id="findCoupons" resultType="Coupon">
+    	SELECT * FROM coupons
     </select>
 
     <!-- Zwraca 1 jeśli udało się zwiększyć licznik (nie przekroczono max_usages), 0 w przeciwnym razie -->
@@ -30,5 +34,16 @@
         INSERT INTO coupons (code, max_usages, current_usages, country_code, created_at)
         VALUES (UPPER(#{code}), #{maxUsages}, 0, #{countryCode}, CURRENT_TIMESTAMP)
     </insert>
+    
+    <select id="findCouponUsage" resultType="CouponUsage">
+    	SELECT 
+    		coupon.code, coupon.created_at, coupon.country_code, coupon.max_usages, coupon.current_usages, 
+    		usage.user_id, usage.used_at
+    	FROM 
+    		coupons coupon
+    	INNER JOIN coupon_usages usage ON usage.coupon_id = coupon.id
+    	WHERE 
+    		UPPER(coupon.code) = UPPER(#{couponCode})
+    </select>
 
 </mapper>

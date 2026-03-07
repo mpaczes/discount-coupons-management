@@ -6,11 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.paczesny.dtos.CouponCreateRequest;
+import pl.paczesny.dtos.CouponUsage;
 import pl.paczesny.exceptions.*;
 import pl.paczesny.mappers.CouponMapper;
 import pl.paczesny.model.Coupon;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -73,6 +76,26 @@ public class CouponService {
 
         log.debug("Zapisywanie kuponu w bazie danych: {}", request);
         couponMapper.insertCoupon(newCoupon);
+    }
+    
+    public List<Coupon> findCoupons() {
+    	log.info("Wyszukiwanie wszystkich kuponów");
+    	try {
+    		return couponMapper.findCoupons();
+    	} catch (Exception ex) {
+    		log.warn("Wyszukiwanie kuponów nie powiodło się");
+    		return new ArrayList<>();
+    	}
+    }
+    
+    public List<CouponUsage> findCouponUsage(String couponCode) {
+    	log.info("Wyszukiwanie użycia kuponu {}", couponCode);
+    	try {
+    		return couponMapper.findCouponUsage(couponCode);
+    	} catch (Exception ex) {
+    		log.warn("Wyszukiwanie użycia kuponu {} nie powiodło się", couponCode);
+    		return new ArrayList<>();
+    	}
     }
     
 }

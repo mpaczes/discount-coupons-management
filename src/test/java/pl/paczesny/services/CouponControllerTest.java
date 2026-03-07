@@ -59,13 +59,13 @@ class CouponControllerTest {
     @Test
     @DisplayName("Powinien zwrócić 400 gdy userId jest pusty")
     void shouldReturnBadRequestWhenUserIdEmpty() throws Exception {
-        CouponUseRequest request = new CouponUseRequest("PROMO2024", "");
+        CouponUseRequest request = new CouponUseRequest("PROMO2024", "user");
         
         mockMvc.perform(post("/api/coupons/use")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectToJson(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.userId").value("ID użytkownika musi mieć od 1 do 50 znaków"));
+                .andExpect(jsonPath("$.userId").value("ID użytkownika musi mieć od 5 do 50 znaków"));
     }
 
     private String objectToJson(Object object) throws Exception {

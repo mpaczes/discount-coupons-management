@@ -12,7 +12,7 @@ public class CouponUseRequest {
 	private final String code;
  
     @NotBlank(message = "ID użytkownika nie może być puste")
-    @Size(min = 1, max = 50, message = "ID użytkownika musi mieć od 1 do 50 znaków")
+    @Size(min = 5, max = 50, message = "ID użytkownika musi mieć od 5 do 50 znaków")
     @Pattern(regexp = "^[a-zA-Z0-9_-]+$", message = "ID użytkownika może zawierać tylko litery, cyfry, myślniki i podkreślenia")
 	private final String userId;
  

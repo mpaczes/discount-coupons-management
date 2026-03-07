@@ -65,7 +65,7 @@ class CouponControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectToJson(request)))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.userId").value("ID użytkownika może zawierać tylko litery, cyfry, myślniki i podkreślenia"));
+                .andExpect(jsonPath("$.userId").value("ID użytkownika musi mieć od 1 do 50 znaków"));
     }
 
     private String objectToJson(Object object) throws Exception {
